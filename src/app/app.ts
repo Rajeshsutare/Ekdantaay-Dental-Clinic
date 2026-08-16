@@ -2,6 +2,7 @@ import { Component, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import emailjs from '@emailjs/browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 interface Service {
   icon: string;
@@ -40,7 +41,23 @@ export interface CarouselSlide {
   styleUrl: './app.scss'
 })
 export class App {
-  clinicName = signal('Ekdantaay Dental Clinic');
+  clinicName = signal('Sai Seva Multispeciality Dental Clinic');
+
+  readonly clinicAddress = 'NAMSKAR CHOUK, Station Road, beside Hotel City Symphony, Ambekar Nagar, Nanded, Maharashtra 431605';
+  readonly googleMapsUrl = 'https://www.google.com/maps/dir//Sai+Seva+Multispeciality+Dental+Clinic,+NAMSKAR+CHOUK,+Station+Road,+beside+Hotel+City+Symphony,+Ambekar+Nagar,+Nanded,+Maharashtra+431605/@18.5840369,73.7624835,11z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3bd1d753c641a727:0xf3241c278f321bd2!2m2!1d77.3241089!2d19.1752183?entry=ttu&g_ep=EgoyMDI2MDgxMi4wIKXMDSoASAFQAw%3D%3D';
+  readonly clinicLatitude = 19.1752153;
+  readonly clinicLongitude = 77.3241157;
+  readonly googleMapsEmbedUrl: SafeResourceUrl;
+  readonly whatsappBookingUrl =
+    'https://wa.me/917769999919?text=' +
+    encodeURIComponent(
+      `Hello Sai Seva Multispeciality Dental Clinic,
+      I would like to book a dental appointment.
+      Clinic: Sai Seva Multispeciality Dental Clinic
+      Location: NAMSKAR CHOUK, Station Road, beside Hotel City Symphony, Ambekar Nagar, Nanded, Maharashtra 431605
+      Please let me know the available appointment dates and time slots.
+      Thank you.`
+    );
   private readonly clinicEmail = signal('sutarerns@gmail.com'); // Doctor / Clinic Inbox
   // EmailJS Configuration Keys
   private readonly EMAILJS_SERVICE_ID = 'service_phyu8ne';
@@ -88,37 +105,39 @@ export class App {
   // Doctors Data 
   doctors = signal<Doctor[]>([
     {
-      name: 'Dr. Jonas kebby, BDS',
-      role: 'Lead Prosthodontist & Cosmetic Dentist',
-      experience: '1000+ Patient Handling Experience',
+      name: 'Dr. Praful Rathod, BDS',
+      role: 'BDS, P.G.D.G.A.M. , MUHS (NASHIK)',
+      experience: '5000+ Patient Handling Experience',
       bio: 'Specializes in aesthetic restorations and full-mouth rehabilitation with a gentle touch.',
-      // image: 'pooja.jpg'
-      image: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8ZG9jdG9yfGVufDB8fDB8fHww'
+      image: 'profile.jpeg'
     }
   ]);
 
   // Reviews Data
   reviews = signal<Review[]>([
     { patientName: 'Gaikwad B.A.', rating: 5, comment: 'The best dental experience I have ever had! The staff made me feel completely relaxed.', date: '2 weeks ago' },
-    { patientName: 'Rahul G', rating: 5, comment: 'Dr. Jonas fixed my implant flawlessly. Clean, modern, and high-tech facility.', date: '1 month ago' },
+    { patientName: 'Rahul G', rating: 5, comment: 'Dr. Praful Rathod fixed my implant flawlessly. Clean, modern, and high-tech facility.', date: '1 month ago' },
     { patientName: 'Chavan C.B', rating: 5, comment: 'Brought my kids here for a routine check-up. Super friendly team and zero wait time!', date: '3 weeks ago' }
   ]);
 
   slides: CarouselSlide[] = [
     {
-      image: 'https://images.unsplash.com/photo-1734518352260-acb18b3f1e9c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjQwfHxvcnRob2RvbnRpY3N8ZW58MHx8MHx8fDA%3D',
+      // image: 'https://images.unsplash.com/photo-1734518352260-acb18b3f1e9c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjQwfHxvcnRob2RvbnRpY3N8ZW58MHx8MHx8fDA%3D',
+      image: 'Clinic-1.jpeg',
       alt: 'Modern Clinic Reception',
       title: 'Your Radiant Smile Starts with Expert Care',
       thought: '"Healing begins with trust, compassion, and dedicated patient care."'
     },
     {
-      image: 'https://plus.unsplash.com/premium_photo-1673728788984-6d6540186c95?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTg1fHxvcnRob2RvbnRpY3N8ZW58MHx8MHx8fDA%3D',
+      // image: 'https://plus.unsplash.com/premium_photo-1673728788984-6d6540186c95?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTg1fHxvcnRob2RvbnRpY3N8ZW58MHx8MHx8fDA%3D',
+      image: 'clinic-2.jpeg',
       alt: 'Advanced Medical Technology',
       title: 'Advanced Care & Technology',
       thought: '"Combining state-of-the-art medical innovations with a soft human touch."'
     },
     {
-      image: 'https://images.unsplash.com/photo-1777443726993-8f9c8e96e46e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTcxfHxvcnRob2RvbnRpY3N8ZW58MHx8MHx8fDA%3D',
+      // image: 'https://images.unsplash.com/photo-1777443726993-8f9c8e96e46e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTcxfHxvcnRob2RvbnRpY3N8ZW58MHx8MHx8fDA%3D',
+      image: 'clinic-3.jpeg',
       alt: 'Compassionate Doctors',
       title: 'Expert Guidance You Can Trust',
       thought: '"Every consultation is a partnership toward your long-term wellness."'
@@ -142,6 +161,13 @@ export class App {
   private timerId: any = null;
   private touchStartX = 0;
 
+  constructor(private readonly sanitizer: DomSanitizer) {
+    const embedUrl =
+      `https://www.google.com/maps?q=${this.clinicLatitude},${this.clinicLongitude}&z=17&output=embed`;
+
+    this.googleMapsEmbedUrl =
+      this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
+  }
   ngOnInit(): void {
     this.startAutoSlide();
   }
