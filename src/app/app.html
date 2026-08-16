@@ -21,7 +21,11 @@
       <a (click)="scrollToSection('doctors')">Doctors</a>
       <a (click)="scrollToSection('reviews')">Reviews</a>
       <a (click)="scrollToSection('about')">About Us</a>
-      <button class="btn-primary mobile-cta" (click)="openBookingModal()">Book Appointment</button>
+      <a (click)="scrollToSection('location')">Location</a>
+
+      <button class="btn-primary mobile-cta" (click)="openBookingModal()">
+        Book Appointment
+      </button>
     </nav>
 
     <!-- Desktop CTA Button -->
@@ -145,7 +149,121 @@
     </div>
   </section>
 
+  <!-- Location / Map Section -->
+  <!-- =========================================================
+     LOCATION SECTION
+========================================================= -->
+  <section id="location" class="location-section section">
+    <div class="container">
 
+      <h2 class="section-title">
+        Find Our Clinic
+      </h2>
+
+      <p class="section-subtitle">
+        Visit {{ clinicName() }} at our convenient location in Nanded.
+      </p>
+
+      <div class="location-card">
+
+        <!-- =====================================================
+           LOCATION INFORMATION
+      ====================================================== -->
+        <div class="location-info">
+
+          <div class="location-icon" aria-hidden="true">
+            📍
+          </div>
+
+          <div class="location-content">
+
+            <h3>Our Clinic Location</h3>
+
+            <address class="clinic-address">
+              NAMSKAR CHOUK, Station Road,<br />
+              beside Hotel City Symphony,<br />
+              Ambekar Nagar, Nanded,<br />
+              Maharashtra 431605
+            </address>
+
+            <!-- Location Details -->
+            <div class="location-details">
+
+              <!-- Working Hours -->
+              <div class="location-detail">
+
+                <span class="detail-icon" aria-hidden="true">
+                  🕒
+                </span>
+
+                <div>
+                  <strong>Working Hours</strong>
+                  <span>
+                    Every Day: 10:00 AM - 10:00 PM
+                  </span>
+                </div>
+
+              </div>
+
+              <!-- Phone -->
+              <div class="location-detail">
+
+                <span class="detail-icon" aria-hidden="true">
+                  📞
+                </span>
+
+                <div>
+                  <strong>Call Us</strong>
+
+                  <a href="tel:+917769999919" aria-label="Call Sai Seva Multispeciality Dental Clinic">
+                    +91 7769999919
+                  </a>
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- Directions -->
+            <a [href]="googleMapsUrl" target="_blank" rel="noopener noreferrer" class="btn-primary map-direction-btn"
+              aria-label="Get directions to Sai Seva Multispeciality Dental Clinic">
+              📍 Get Directions
+            </a>
+
+          </div>
+        </div>
+
+        <!-- =====================================================
+           GOOGLE MAP
+      ====================================================== -->
+        <div class="map-wrapper">
+
+          <iframe class="google-map" [src]="googleMapsEmbedUrl" title="Sai Seva Multispeciality Dental Clinic Location"
+            loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+
+          <!-- Clickable overlay -->
+          <a [href]="googleMapsUrl" target="_blank" rel="noopener noreferrer" class="map-overlay"
+            aria-label="Open Sai Seva Multispeciality Dental Clinic in Google Maps">
+
+            <span class="map-overlay-icon">📍</span>
+
+            <strong>
+              Open in Google Maps
+            </strong>
+
+            <small>
+              Get directions to our clinic
+            </small>
+
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
 
   <!-- Footer -->
   <footer class="footer">
@@ -157,7 +275,8 @@
           <p>Founded with a passion for painless, patient-first dentistry, our clinic brings together advanced dental
             technologies, stringent sterilization standards, and a welcoming atmosphere.</p>
           <div class="info-list">
-            <div class="info-item"><strong>📍 Location:</strong> Namaskar Chouk, MGM College Road Nanded - 431605</div>
+            <div class="info-item"><strong>📍 Location:</strong> NAMSKAR CHOUK, Station Road, beside Hotel City
+              Symphony, Ambekar Nagar, Nanded, Maharashtra 431605</div>
             <div class="info-item"><strong>🕒 Hours:</strong> Every Day: 10:00 AM - 10:00 PM </div>
           </div>
         </div>
@@ -166,15 +285,21 @@
         <div class="footer-contact-info">
 
           <!-- Phone -->
-          <a href="tel:+918080387349" class="footer-contact" title="Call us at +91 8080387349"
-            aria-label="Call us at +91 8080387349">
+          <a href="tel:+917769999919" class="footer-contact" title="Call us at +91 7769999919"
+            aria-label="Call us at +91 7769999919">
             <span class="contact-icon">📞</span>
-            <span>+91 8080387349</span>
+            <span>+91 7769999919</span>
           </a>
-          <a href="https://wa.me/918080387349" title="Chat with us on WhatsApp" target="_blank"
+          <!-- <a href="https://wa.me/917769999919" title="Chat with us on WhatsApp" target="_blank"
             rel="noopener noreferrer" class="whatsapp-icon" aria-label="Chat with us on WhatsApp">
             <img src="whatsapp.png" alt="WhatsApp" class="chat-icon" />
             <p>Chat with Us</p>
+          </a> -->
+          <a [href]="whatsappBookingUrl" target="_blank" rel="noopener noreferrer" class="whatsapp-icon"
+            aria-label="Book appointment via WhatsApp" title="Book appointment via WhatsApp">
+            <img src="whatsapp.png" alt="WhatsApp" class="chat-icon" />
+
+            <p style="color: #fff;text-decoration: none;">Book Appointment</p>
           </a>
 
         </div>
@@ -297,8 +422,12 @@
     (click)="scrollToSection('home')">
     ↑
   </button>
-  <a href="https://wa.me/918080387349" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp"
+  <!-- <a href="https://wa.me/917769999919" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp"
     title="Chat with us on WhatsApp">
+    <img src="whatsapp.png" alt="WhatsApp" class="chat-icon-fixed" />
+  </a> -->
+  <a [href]="whatsappBookingUrl" target="_blank" rel="noopener noreferrer" class="whatsapp-icon"
+    aria-label="Book appointment via WhatsApp" title="Book appointment via WhatsApp">
     <img src="whatsapp.png" alt="WhatsApp" class="chat-icon-fixed" />
   </a>
 </div>
